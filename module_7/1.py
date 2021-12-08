@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
 
 
 def dr(rates_list):
