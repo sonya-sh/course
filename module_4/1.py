@@ -16,3 +16,4 @@ def binary_search(l, x):
 
 l1 = [5, 7, 87, 7, 47, 888, 99]
 print(binary_search(l1, 7))
+

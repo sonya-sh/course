@@ -19,12 +19,13 @@ students_python = cursor.execute("""SELECT Students.name, Courses.name
                                     FROM 
                                     Students, Courses, Student_Courses 
                                     WHERE 
-                                    (courses_id = Courses.id = 1) and (student_id = Students.id)""").fetchall()
+                                    (Courses.id = 1) AND (Student_Courses.courses_id=Courses.id) and (Students.id=Student_Courses.student_id)""").fetchall()
+
 students_python_spb = cursor.execute("""SELECT Students.name, Courses.name, Students.city 
                                    FROM 
                                    Students, Courses, Student_Courses 
                                    WHERE
-                                   (courses_id = Courses.id = 1) and (student_id = Students.id) and (Students.city = 'Spb')""").fetchall()
+                                   (Student_Courses.courses_id=Courses.id) and (Students.id=Student_Courses.student_id) and (Students.city='Spb') and (Courses.id = 1)""").fetchall()
 print(students_30)
 print(students_python)
 print(students_python_spb)
