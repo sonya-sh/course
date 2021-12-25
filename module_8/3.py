@@ -1,6 +1,6 @@
 from peewee import *
 
-conn = SqliteDatabase('studydb3.sqlite')
+conn = SqliteDatabase('db2.sqlite')
 
 
 class BaseModel(Model):
@@ -9,23 +9,23 @@ class BaseModel(Model):
 
 
 class Students(BaseModel):
-    id = PrimaryKeyField()
-    name = CharField()
-    surname = CharField()
-    age = IntegerField()
-    city = CharField()
+    id = PrimaryKeyField(column_name='id')
+    name = CharField(column_name='name')
+    surname = CharField(column_name='surname')
+    age = IntegerField(column_name='age')
+    city = CharField(column_name='city')
 
 
 class Courses(BaseModel):
-    id = PrimaryKeyField()
-    name = CharField()
-    time_start = DateTimeField()
-    time_end = DateTimeField()
+    id = PrimaryKeyField(column_name='id')
+    name = CharField(column_name='name')
+    time_start = DateTimeField(column_name='time_start')
+    time_end = DateTimeField(column_name='time_end')
 
 
 class Student_Courses(BaseModel):
-    student_id = ForeignKeyField(Students, to_field="id")
-    courses_id = ForeignKeyField(Courses, to_field="id")
+    student_id = ForeignKeyField(Students, to_field="id", column_name='student_id')
+    courses_id = ForeignKeyField(Courses, to_field="id", column_name='courses_id')
 
 
 def create_tbls():
@@ -47,28 +47,28 @@ def create_tbls():
     courses = Courses(name="java", time_start="13.07.2021", time_end="16.08.2021")
     courses.save()
 
-    st_c = Student_Courses(student_id=1, courses_id=1)
-    st_c.save()
-    st_c = Student_Courses(student_id=2, courses_id=1)
-    st_c.save()
-    st_c = Student_Courses(student_id=3, courses_id=1)
-    st_c.save()
-    st_c = Student_Courses(student_id=4, courses_id=2)
-    st_c.save()
+    student_course = Student_Courses(student_id=1, courses_id=1)
+    student_course.save()
+    student_course = Student_Courses(student_id=2, courses_id=1)
+    student_course.save()
+    student_course = Student_Courses(student_id=3, courses_id=1)
+    student_course.save()
+    student_course = Student_Courses(student_id=4, courses_id=2)
+    student_course.save()
 
 
-#create_tbls()
+create_tbls()
 for student in Students.select().where(Students.age > 30):
-    print(student.name, student.age)
+    print(student.name)
 print('\n')
 
 query = Students.select().join(Student_Courses).join(Courses).where(Courses.name == 'python')
 for student in query:
-    print(student.name, student.city)
+    print(student.name)
 print('\n')
 
-query2 = Students.select().join(Student_Courses).join(Courses).where((Students.city == 'Spb') & (Courses.name == 'python'))
-for st in query2:
-    print(st.name)
+query2 = Students.select().join(Student_Courses).join(Courses).where((Students.city == 'Spb') and (Courses.name == 'python'))
+for student in query2:
+    print(student.name)
 
 conn.close()
