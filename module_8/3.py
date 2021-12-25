@@ -71,4 +71,5 @@ query2 = Students.select().join(Student_Courses).join(Courses).where((Students.c
 for student in query2:
     print(student.name)
 
+
 conn.close()
